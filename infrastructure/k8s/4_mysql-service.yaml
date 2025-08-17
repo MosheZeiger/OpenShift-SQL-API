@@ -1,0 +1,12 @@
+# Creates an internal ClusterIP service to expose MySQL within the cluster.
+# This allows the backend application to connect to the database using the service name 'mysql'.
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: mysql
+  type: ClusterIP

@@ -1,0 +1,15 @@
+# Exposes the backend service to the outside world using an OpenShift Route.
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: data-loader-route
+spec:
+  to:
+    kind: Service
+    name: data-loader-service
+  port:
+    targetPort: 8080
+  tls:
+    # Enables HTTPS for the route
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
