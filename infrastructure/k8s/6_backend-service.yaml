@@ -1,0 +1,13 @@
+# Creates an internal service to expose the backend application within the cluster.
+# The OpenShift Route will target this service.
+apiVersion: v1
+kind: Service
+metadata:
+  name: data-loader-service
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: data-loader
+  type: ClusterIP

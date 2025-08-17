@@ -1,0 +1,39 @@
+# Deploys the FastAPI backend application.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-loader-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: data-loader
+  template:
+    metadata:
+      labels:
+        app: data-loader
+    spec:
+      containers:
+        - name: data-loader-app
+          image: moshezeiger/data-loader:1.2
+          ports:
+            - containerPort: 8080
+          env:
+            # Inject database connection details from the Secret
+            - name: DB_HOST
+              value: "mysql" # The name of the MySQL service
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_DATABASE
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_PASSWORD
