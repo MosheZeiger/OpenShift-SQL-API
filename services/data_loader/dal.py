@@ -28,11 +28,14 @@ class DataLoader:
         """
         if not self.connection or not self.connection.is_connected():
             return {"error": "Database connection is not available"}
+        
+        columns_string = ",".join(config.COLUMNS_TO_SELECT)
+        
 
         # Using a dictionary cursor to get results as key-value pairs
         cursor = self.connection.cursor(dictionary=True)
         try:
-            cursor.execute("SELECT ID, first_name, last_name FROM data")
+            cursor.execute(f"SELECT {columns_string} FROM {config.TABLE_NAME}")
             records = cursor.fetchall()
             return records
         except Error as e:
