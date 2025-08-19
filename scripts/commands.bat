@@ -4,7 +4,7 @@ cd /d "C:\Analiza\Kodkod_2025\Projects\OpenShift-SQL-API\scripts"
 
 SET PROJECT_NAME=moshez-1-dev
 SET DOCKERHUB_USERNAME=moshezeiger
-SET IMAGE_NAME=%DOCKERHUB_USERNAME%/data-loader:1.2
+SET IMAGE_NAME=%DOCKERHUB_USERNAME%/data-loader:1.3
 
 oc delete project %PROJECT_NAME% --ignore-not-found=true
 oc new-project %PROJECT_NAME%
@@ -26,7 +26,7 @@ oc apply -f ../infrastructure/k8s/7_backend-route.yaml
 
 oc get pods -l app=mysql -o name
 
-set MYSQL_POD=mysql-6d4874d999-lblln
+set MYSQL_POD=mysql-6d4874d999-xm8gk
 
 echo MySQL Pod Name: %MYSQL_POD% 
 
@@ -35,7 +35,8 @@ oc cp create_data.sql %MYSQL_POD%:/tmp/
 oc cp insert_data.sql %MYSQL_POD%:/tmp/
 
 
-
+oc exec -i %MYSQL_POD% -- /bin/bash -c "mysql -u root -p$MYSQL_ROOT_PASSWORD appdb -e 'source /tmp/create_data.sql'"
+oc exec -i %MYSQL_POD% -- /bin/bash -c "mysql -u root -p$MYSQL_ROOT_PASSWORD appdb -e 'source /tmp/insert_data.sql'"
 
 oc get route data-loader-route
 
