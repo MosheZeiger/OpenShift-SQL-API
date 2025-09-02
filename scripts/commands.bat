@@ -4,7 +4,7 @@ cd /d "C:\Analiza\Kodkod_2025\Projects\OpenShift-SQL-API\scripts"
 
 SET PROJECT_NAME=moshez-1-dev
 SET DOCKERHUB_USERNAME=moshezeiger
-SET IMAGE_NAME=%DOCKERHUB_USERNAME%/data-loader:1.4
+SET IMAGE_NAME=%DOCKERHUB_USERNAME%/data-loader:1.5
 
 oc delete project %PROJECT_NAME% --ignore-not-found=true
 oc new-project %PROJECT_NAME%
@@ -25,7 +25,7 @@ oc apply -f ../infrastructure/k8s/7_backend-route.yaml
 
 oc get pods -l app=mysql -o name
 
-set MYSQL_POD=mysql-6d4874d999-m8l84
+set MYSQL_POD=mysql-6d4874d999-sg4ll
 
 echo MySQL Pod Name: %MYSQL_POD% 
 

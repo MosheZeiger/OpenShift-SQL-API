@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: data-loader-app
-          image: moshezeiger/data-loader:1.4
+          image: moshezeiger/data-loader:1.5
           ports:
             - containerPort: 8080
           env:
